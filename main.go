@@ -81,6 +81,7 @@ func ValidAscii(s string) bool {
 }
 
 func main() {
+	http.HandleFunc("/favicon.ico", faviconHandler)
 	http.HandleFunc("/", Handler)
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/"))))
 	fmt.Println("Listening at localhost:6969\nHttp Status :", http.StatusOK )
@@ -99,4 +100,8 @@ func openbrowser(zz string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func faviconHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "assets/css/img/favicon.ico")
 }
